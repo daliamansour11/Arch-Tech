@@ -1,0 +1,2 @@
+C:/Users/modym/StudioProjects/archtech/android/app/.cxx/Debug/5lik6l5d/x86/CMakeFiles/edit_cache.dir
+C:/Users/modym/StudioProjects/archtech/android/app/.cxx/Debug/5lik6l5d/x86/CMakeFiles/rebuild_cache.dir

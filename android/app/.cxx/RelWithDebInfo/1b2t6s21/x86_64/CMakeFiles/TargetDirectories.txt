@@ -1,0 +1,2 @@
+C:/Users/modym/StudioProjects/archtech/android/app/.cxx/RelWithDebInfo/1b2t6s21/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/modym/StudioProjects/archtech/android/app/.cxx/RelWithDebInfo/1b2t6s21/x86_64/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,33 @@
+final class EndPoints {
+  EndPoints._();
+  static const baseUrl = 'https://api.archeotechhub.com/api/';
+  static const refreshToken = '';
+  static const register = 'register';
+  static const sliders = 'sliders';
+  static const shared = 'ruins_have_review';
+  static const login = 'login';
+  static const verifyCode = 'email/verify-code';
+  static const resendCode = 'email/resend-code';
+  static const verifyCodePassword = 'check/password-code';
+  static const changePassword = 'reset-password';
+  static const resendCodePassword = 'resend/password-code';
+  static const deleteAccount = 'delete/profile';
+  static const singInWithGoogle = 'social/login';
+  static const registerWithGoogle = 'social/register';
+  static const loginWithGoogle = 'social/login';
+  static const processImage = 'upload-image';
+  static const String aiBaseUrl = 'https://ai.archeotechhub.com/';
+  static const forgetPassword = 'email/forgot-password';
+  static const getRuins = 'getruins';
+  static const getUserProfile = 'profile';
+  static const String getRuinsEndpoint = 'getruins';
+  static const String showRuinDetailsEndpoint = 'show';
+  static const String storeReviewEndpoint = 'ruin/review';
+  static const String getFavorite = 'get-favorite';
+  static const String addFavorite = 'add-favorite';
+  static const String fetchAllCommentsEndpoint = 'comments';
+  static const String storeCommentEndpoint = 'comments';
+  static const String likeCommentEndpoint = 'comments/like';
+  static const String dislikeCommentEndpoint = 'comments/dislike';
+  static const String payment = 'payment';
+}

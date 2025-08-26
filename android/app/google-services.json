@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "152719487538",
+    "project_id": "archtech-d74f6",
+    "storage_bucket": "archtech-d74f6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:152719487538:android:3e13a060cc50d0d1f4022b",
+        "android_client_info": {
+          "package_name": "com.codeman.archtech"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "152719487538-8nlniou4mmqvt7nfhg2p17dlj5lk920u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.codeman.archtech",
+            "certificate_hash": "69d86118c51441e21ec92314e0c0a656b89f1ae7"
+          }
+        },
+        {
+          "client_id": "152719487538-tptucgr4rk3rqd34hnjiq6s4pmeap2e5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.codeman.archtech",
+            "certificate_hash": "7a78f575312e072be95d8c776ccd1235f873b680"
+          }
+        },
+        {
+          "client_id": "152719487538-8qumllq5eaoj792jbu92ig1d6raft02v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvI_duURuoq8FrXTDMH_OU7yzGqEbg6j0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "152719487538-2c0visq16hgemjgd048402i18h4aj5a0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "152719487538-71qpegd2d09d2chhgol3gptd5voh8gv0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "Archtech"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

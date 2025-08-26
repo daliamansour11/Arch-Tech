@@ -1,0 +1,206 @@
+name: archtech
+description: "A new Flutter project to help tourists discover and learn about
+  ancient Egypt."
+publish_to: "none"
+
+version: 2.0.14+14
+
+environment:
+  sdk: ^3.6.0
+
+dependencies:
+  cached_network_image: ^3.4.1
+  camerawesome: ^2.4.0
+  change_app_package_name: ^1.5.0
+  country_flags: ^3.0.0
+  cross_file: ^0.3.4+2
+  cupertino_icons: ^1.0.8
+  dio: ^5.8.0+1
+  equatable: ^2.0.7
+  file_picker: ^10.1.9
+  firebase_core: ^3.13.1
+  firebase_messaging: ^15.2.6
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^9.1.1
+  flutter_displaymode: ^0.6.0
+  
+  flutter_local_notifications: ^19.2.1
+  flutter_native_splash: ^2.4.4
+  flutter_rating_bar: ^4.0.1
+  flutter_secure_storage: ^9.2.4
+  freezed: ^2.5.8
+  freezed_annotation: ^2.4.4
+  geolocator: ^13.0.2
+  google_maps_flutter: ^2.12.2
+  google_sign_in: ^6.3.0
+  http: ^1.4.0
+  http_parser: 4.1.0
+  image_picker: ^1.1.2
+  in_app_purchase: ^3.2.3
+  internet_connection_checker: ^3.0.1
+  intl: ^0.20.0
+  json_annotation: ^4.9.0
+  path_provider: ^2.1.5
+  permission_handler: ^12.0.0+1
+  pinput: ^5.0.1
+  shared_preferences: ^2.5.3
+  sign_in_with_apple: ^7.0.1
+  skeletonizer: ^2.1.0+1
+  url_launcher: ^6.3.1
+  vector_graphics: ^1.1.19
+  firebase_auth: ^5.6.0
+
+dependency_overrides:
+  intl: any
+
+dev_dependencies:
+  build_runner: ^2.4.14
+  flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.14.3
+
+  flutter_localizations:
+    sdk: flutter
+  flutter_test:
+    sdk: flutter
+  json_serializable: ^6.9.2
+  vector_graphics_compiler: ^1.1.17
+flutter_icons:
+  image_path: "assets/images/logo.png"
+  android: true
+  ios: true
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - lang/ar.json
+    - lang/en.json
+    - lang/fr.json
+    - lang/zh.json
+    - assets/images/
+    - path: assets/Svg/home.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/Svg/home_outline.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/Svg/camera.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/Svg/favorite.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/Svg/location.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/Svg/person.svg
+      transformers:
+        - package: vector_graphics_compiler
+
+    - path: assets/svg/apple.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/svg/camera.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/svg/edit_profile.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/svg/facebook.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/svg/favorite.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/svg/google.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/svg/home.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/svg/home_outline.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/svg/lang.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/svg/location.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/svg/logout.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/svg/payment.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/svg/person.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/svg/privacy.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/svg/specialist.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/svg/success.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/svg/support.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/svg/tourist.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/Svg/tourist.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/Svg/specialist.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/Svg/apple.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/Svg/success.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/Svg/facebook.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/Svg/google.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/Svg/stars.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/Svg/comment.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/Svg/distance.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/Svg/sound.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/Svg/volume.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/Svg/star.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/Svg/note.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/Svg/reserchTool.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/Svg/digital.svg
+      transformers:
+        - package: vector_graphics_compiler
+# flutter_assets:
+#   assets_path: assets/images/
+#   output_path: lib/core/Constants/
+#   filename: images_constants.dart
+flutter_assets:
+  assets_path: assets/Svg/
+  output_path: lib/core/_constants/
+  filename: svg_constants.dart
