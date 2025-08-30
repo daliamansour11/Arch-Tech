@@ -1,0 +1,6 @@
+"NSCameraUsageDescription" = "Camera access is needed to scan QR codes for event check-ins";
+"NSMicrophoneUsageDescription" = "We need access to the microphone for recording audio";
+"NSPhotoLibraryUsageDescription" = "Need access to your photo library to upload profile image and other data";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Location access is needed to provide tracking services";
+"NSLocationWhenInUseUsageDescription" = "We use your location to show nearby heritage sites and guide you on the map (e.g., suggest places within 2 km and draw the route).";
+
