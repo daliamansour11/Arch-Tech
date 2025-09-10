@@ -189,7 +189,7 @@
     "Subscribedescription": "Get exclusive content, advanced tools, and a personalized experience.",
     "Subscribebutton": "Subscribe Now",
     "CancelSubscription": "Cancel Subscription",
-    "CancelSubscriptions": "Restore Purchases",
+    "RestorePurchases": "Restore Purchases",
     "SubscriptionUpgradedSuccessfully": "Subscription Upgraded Successfully",
     "PleaseSelectPlan": "Please Select a Plan",
     "ImageProcessingSuccess": "Image Processed Successfully",
@@ -212,6 +212,9 @@
     "Bysubscribing": "By subscribing, you agree to our",
     "TermsOfUse": "Terms of Use",
     "Privacypolicy": "Privacy Policy",
+    "and": "and",
+    "terms_and_conditions": "Terms & Conditions",
+    "privacy_policy": "Privacy Policy",
     "Durationnotspecified": "Duration not specified"
 
 }

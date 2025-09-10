@@ -210,7 +210,12 @@
     "Bysubscribing": "订阅即表示您同意",
     "TermsOfUse": "使用条款",
     "Privacypolicy": "隐私政策",
-    "Durationnotspecified": "未指定订阅时长"
+    "Durationnotspecified": "未指定订阅时长",
+    "and": "和",
+    "terms_and_conditions": "条款和条件",
+    "privacy_policy": "隐私政策",
+    "RestorePurchases": "恢复购买"
+
 
 
 }

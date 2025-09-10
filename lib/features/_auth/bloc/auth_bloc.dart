@@ -207,66 +207,66 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
                 'An unexpected error occurred. Please try again.'));
           }
         },
-        loginWithApple: () async {
-          emit(const AuthState.loading());
-          try {
-            final credential = await SignInWithApple.getAppleIDCredential(
-              scopes: [
-                AppleIDAuthorizationScopes.email,
-                AppleIDAuthorizationScopes.fullName,
-              ],
-            );
-
-            final responses = await _apiConsumer.post(EndPoints.loginWithGoogle,
-                body: {'token': credential.identityToken, 'type': 'apple'});
-
-            if (responses.isSuccessful) {
-              final user = await getUser(responses);
-              emit(AuthState.loaded(user));
-            } else {
-              emit(AuthState.error(responses.errorMessage));
-            }
-          } on ApiException catch (error) {
-            debugPrint('error: ${error.messageKey}');
-            emit(AuthState.error(error.messageKey));
-          } catch (error) {
-            debugPrint('error: $error');
-            emit(const AuthState.error(
-                'An unexpected error occurred. Please try again.'));
-          }
-        },
-        registerWithApple: (role) async {
-          emit(const AuthState.loading());
-          try {
-            final credential = await SignInWithApple.getAppleIDCredential(
-              scopes: [
-                AppleIDAuthorizationScopes.email,
-                AppleIDAuthorizationScopes.fullName,
-              ],
-            );
-
-            final responses = await _apiConsumer
-                .post(EndPoints.registerWithGoogle, body: {
-              'token': credential.identityToken,
-              'role': role,
-              'type': 'apple'
-            });
-
-            if (responses.isSuccessful) {
-              await messaging.subscribeToTopic('global_notifications');
-              await getUser(responses);
-              emit(const AuthState.registerByGoogle());
-            } else {
-              emit(AuthState.error(responses.errorMessage));
-            }
-          } on ApiException catch (error) {
-            emit(AuthState.error(error.messageKey));
-          } catch (error) {
-            debugPrint('error: $error');
-            emit(const AuthState.error(
-                'An unexpected error occurred. Please try again.'));
-          }
-        },
+        // loginWithApple: () async {
+        //   emit(const AuthState.loading());
+        //   try {
+        //     final credential = await SignInWithApple.getAppleIDCredential(
+        //       scopes: [
+        //         AppleIDAuthorizationScopes.email,
+        //         AppleIDAuthorizationScopes.fullName,
+        //       ],
+        //     );
+        //
+        //     final responses = await _apiConsumer.post(EndPoints.loginWithGoogle,
+        //         body: {'token': credential.identityToken, 'type': 'apple'});
+        //
+        //     if (responses.isSuccessful) {
+        //       final user = await getUser(responses);
+        //       emit(AuthState.loaded(user));
+        //     } else {
+        //       emit(AuthState.error(responses.errorMessage));
+        //     }
+        //   } on ApiException catch (error) {
+        //     debugPrint('error: ${error.messageKey}');
+        //     emit(AuthState.error(error.messageKey));
+        //   } catch (error) {
+        //     debugPrint('error: $error');
+        //     emit(const AuthState.error(
+        //         'An unexpected error occurred. Please try again.'));
+        //   }
+        // },
+        // registerWithApple: (role) async {
+        //   emit(const AuthState.loading());
+        //   try {
+        //     final credential = await SignInWithApple.getAppleIDCredential(
+        //       scopes: [
+        //         AppleIDAuthorizationScopes.email,
+        //         AppleIDAuthorizationScopes.fullName,
+        //       ],
+        //     );
+        //
+        //     final responses = await _apiConsumer
+        //         .post(EndPoints.registerWithGoogle, body: {
+        //       'token': credential.identityToken,
+        //       'role': role,
+        //       'type': 'apple'
+        //     });
+        //
+        //     if (responses.isSuccessful) {
+        //       await messaging.subscribeToTopic('global_notifications');
+        //       await getUser(responses);
+        //       emit(const AuthState.registerByGoogle());
+        //     } else {
+        //       emit(AuthState.error(responses.errorMessage));
+        //     }
+        //   } on ApiException catch (error) {
+        //     emit(AuthState.error(error.messageKey));
+        //   } catch (error) {
+        //     debugPrint('error: $error');
+        //     emit(const AuthState.error(
+        //         'An unexpected error occurred. Please try again.'));
+        //   }
+        // },
       );
     });
   }

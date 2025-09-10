@@ -14,6 +14,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart' as http;
 import 'package:in_app_purchase/in_app_purchase.dart';
 
 class UpgradeCubit extends Cubit<UpgradeState> {
@@ -22,12 +23,12 @@ class UpgradeCubit extends Cubit<UpgradeState> {
   final CacheHelper _cacheHelper;
   List<ProductDetails> _products = [];
   StreamSubscription<List<PurchaseDetails>>? _purchaseSubscription;
+  final CancelToken _cancelToken = CancelToken();
 
   UpgradeCubit(this._apiConsumer, this._cacheHelper)
       : super(const UpgradeState());
 
   Future<void> initialize() async {
-    // Check if in-app purchases are available
     final bool isAvailable = await _inAppPurchase.isAvailable();
     if (!isAvailable) {
       if (!isClosed) {
@@ -36,15 +37,9 @@ class UpgradeCubit extends Cubit<UpgradeState> {
       return;
     }
 
-    // Load subscription products
     await _loadSubscriptionProducts();
-
-    // Listen for purchase updates
-    _purchaseSubscription = _inAppPurchase.purchaseStream.listen((
-      purchaseDetailsList,
-    ) {
-      _handlePurchase(purchaseDetailsList);
-    });
+    _purchaseSubscription =
+        _inAppPurchase.purchaseStream.listen(_handlePurchase);
   }
 
   Future<void> _loadSubscriptionProducts() async {
@@ -58,10 +53,9 @@ class UpgradeCubit extends Cubit<UpgradeState> {
       };
 
       final ProductDetailsResponse response =
-          await _inAppPurchase.queryProductDetails(productIds);
+      await _inAppPurchase.queryProductDetails(productIds);
 
       if (response.notFoundIDs.isNotEmpty) {
-        debugPrint('response.notFoundIDs.isNotEmpty: ${response.notFoundIDs}');
         if (!isClosed) {
           emit(state.copyWith(error: StringManager.productsNotFound));
         }
@@ -83,162 +77,130 @@ class UpgradeCubit extends Cubit<UpgradeState> {
     if (!isClosed) emit(state.copyWith(isLoading: true));
 
     try {
-      final PurchaseParam purchaseParam = PurchaseParam(
-        productDetails: product,
-      );
+      final purchaseParam = PurchaseParam(productDetails: product);
       await _inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
     } on PlatformException catch (e) {
-      // Handle PlatformException (e.g., duplicate product, network issues, etc.)
-      debugPrint('Purchase failed (PlatformException): ${e.message}');
-
-      String errorMessage = 'Purchase failed. Please try again.';
-      if (e.code == 'storekit_duplicate_product_object') {
-        errorMessage =
-            'There is a pending transaction. Please wait a few moments';
-      } else if (e.code == 'storekit_unknown' || e.code == 'storekit_error') {
-        errorMessage = 'An unknown error occurred. Please try again later.';
-      }
-
-      if (!isClosed) {
-        emit(state.copyWith(error: errorMessage));
-      }
+      _handlePurchaseError(e.message, e.code);
     } on InAppPurchaseException catch (e) {
-      // Handle InAppPurchase-specific exceptions
-      debugPrint('Purchase failed (InAppPurchaseException): ${e.message}');
-
-      String errorMessage = 'Purchase failed. Please try again.';
-      if (e.message?.contains('network') ?? false) {
-        errorMessage = 'Network error. Please check your internet connection.';
-      }
-
-      if (!isClosed) {
-        emit(state.copyWith(error: errorMessage));
-      }
+      _handlePurchaseError(e.message, null);
     } catch (e) {
-      // Handle any other exceptions
-      debugPrint('Purchase failed (Unexpected error): $e');
-
-      if (!isClosed) {
-        emit(
-          state.copyWith(
-            error: 'An unexpected error occurred. Please try again later.',
-          ),
-        );
-      }
+      _handlePurchaseError('An unexpected error occurred.', null);
     } finally {
-      // Ensure loading is turned off
+      if (!isClosed) emit(state.copyWith(isLoading: false));
+    }
+  }
+
+  Future<void> restorePurchases() async {
+    if (!isClosed) emit(state.copyWith(isLoading: true));
+    try {
+      final available = await _inAppPurchase.isAvailable();
+      if (!available) {
+        if (!isClosed) {
+          emit(state.copyWith(
+              isLoading: false,
+              error: 'In-app purchases not available on this device.'));
+        }
+        return;
+      }
+      await _inAppPurchase.restorePurchases();
+    } catch (e) {
       if (!isClosed) {
-        emit(state.copyWith(isLoading: false));
+        emit(state.copyWith(
+            isLoading: false, error: 'Failed to restore purchases: $e'));
       }
     }
   }
 
-  void _handlePurchase(List<PurchaseDetails> purchaseDetailsList) {
-    for (var purchaseDetails in purchaseDetailsList) {
-      switch (purchaseDetails.status) {
+  void _handlePurchase(List<PurchaseDetails> purchases) {
+    for (final purchase in purchases) {
+      switch (purchase.status) {
         case PurchaseStatus.purchased:
-          _sendPurchaseConfirmation(purchaseDetails);
-
+        case PurchaseStatus.restored:
+          _sendPurchaseConfirmation(purchase);
           break;
         case PurchaseStatus.canceled:
-          if (!isClosed) {
-            emit(state.copyWith(error: 'Subscription purchase canceled.'));
-          }
+          if (!isClosed) emit(state.copyWith(error: 'Subscription canceled.'));
           break;
         case PurchaseStatus.error:
-          if (!isClosed) {
-            emit(state.copyWith(error: purchaseDetails.error?.message));
-          }
-          debugPrint(purchaseDetails.error?.message);
+          if (!isClosed) emit(state.copyWith(error: purchase.error?.message));
           break;
         case PurchaseStatus.pending:
-          _inAppPurchase.completePurchase(purchaseDetails);
-          break;
-        case PurchaseStatus.restored:
+          if (!isClosed) emit(state.copyWith(isLoading: true));
           break;
       }
     }
+  }
+
+  void _handlePurchaseError(String? message, String? code) {
+    String errorMessage = message ?? 'Purchase failed. Please try again.';
+    if (code == 'storekit_duplicate_product_object') {
+      errorMessage = 'There is a pending transaction. Please wait a few moments';
+    }
+    if (!isClosed) emit(state.copyWith(error: errorMessage));
   }
 
   void selectPlan(ProductDetails plan) {
     if (!isClosed) emit(state.copyWith(product: plan));
   }
 
-  Future<void> _sendPurchaseConfirmation(
-    PurchaseDetails purchaseDetails,
-  ) async {
+  Future<void> _sendPurchaseConfirmation(PurchaseDetails purchaseDetails) async {
     if (!isClosed) emit(state.copyWith(isLoading: true));
+
     try {
-      final String id = await _cacheHelper.getData(key: 'id') ?? '';
+      final receiptData = purchaseDetails.verificationData.serverVerificationData;
+      final result = await validateReceipt(receiptData);
 
-      // final bool isIOS = Platform.isIOS;
-
-      final ApiResponse response = await _sendDataPurchase(id, purchaseDetails);
-      if (isClosed) return;
-
-      if (response.isSuccessful) {
+      if (result['status'] == 0) {
         await _completePurchaseIfNeeded(purchaseDetails);
-
         if (!isClosed) emit(state.copyWith(isUpgraded: true));
       } else {
-        _handleFailedTransaction(response.errorMessage, purchaseDetails);
+        _handleFailedTransaction('Receipt not valid: ${result['status']}', purchaseDetails);
       }
-    } on InAppPurchaseException catch (error) {
-      _handleFailedTransaction(
-          error.message ?? 'Transaction failed.', purchaseDetails);
-    } on ApiException catch (error) {
-      _handleFailedTransaction(error.messageKey, purchaseDetails);
-    } catch (error) {
-      _handleFailedTransaction(
-          StringManager.somethingWentWrong, purchaseDetails);
+    } catch (e) {
+      _handleFailedTransaction('Transaction failed: $e', purchaseDetails);
+    } finally {
+      if (!isClosed) emit(state.copyWith(isLoading: false));
     }
   }
 
-  final CancelToken _cancelToken = CancelToken();
+  Future<Map<String, dynamic>> validateReceipt(String receiptData) async {
+    const sharedSecret = 'YOUR_SHARED_SECRET_HERE';
+    final prodUrl = Uri.parse('https://buy.itunes.apple.com/verifyReceipt');
+    final sandboxUrl = Uri.parse('https://sandbox.itunes.apple.com/verifyReceipt');
 
-  Future<ApiResponse> _sendDataPurchase(
-    String userId,
-    PurchaseDetails purchaseDetails,
-  ) async {
-    if (Platform.isAndroid) {
-      final verificationData =
-          purchaseDetails.verificationData.localVerificationData;
-      final Map<String, dynamic> parsedData = jsonDecode(verificationData);
+    Map<String, dynamic> body = {
+      'receipt-data': receiptData,
+      'password': sharedSecret,
+      'exclude-old-transactions': true,
+    };
 
-      return await _apiConsumer.post(EndPoints.payment,
-          cancelToken: _cancelToken, body: parsedData);
-    } else {
-      final receiptData =
-          purchaseDetails.verificationData.serverVerificationData;
-      if (receiptData.isEmpty) {
-        throw const ApiException(messageKey: 'Invalid receipt data');
+    try {
+      final response = await http.post(prodUrl,
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode(body));
+
+      final data = jsonDecode(response.body);
+
+      if (data['status'] == 21007) {
+        final sandboxResponse = await http.post(sandboxUrl,
+            headers: {'Content-Type': 'application/json'},
+            body: jsonEncode(body));
+        return jsonDecode(sandboxResponse.body);
       }
 
-      final model = ApplePaymentModel(
-        userId: userId,
-        receiptData: receiptData,
-        type: 'Apple',
-        transactionId: purchaseDetails.purchaseID ?? '',
-        productId: purchaseDetails.productID,
-        purchaseDateMs: DateTime.now().millisecondsSinceEpoch,
-        
-      );
-      return await _apiConsumer.post(
-        EndPoints.payment,
-        body: model.toJson(),
-      );
+      return data;
+    } catch (e) {
+      return {'status': -1, 'error': e.toString()};
     }
   }
 
-  Future<void> _completePurchaseIfNeeded(
-      PurchaseDetails purchaseDetails) async {
+  Future<void> _completePurchaseIfNeeded(PurchaseDetails purchaseDetails) async {
     if (purchaseDetails.pendingCompletePurchase) {
       await _inAppPurchase.completePurchase(purchaseDetails);
     }
   }
 
-  void _handleFailedTransaction(
-      String errorMessage, PurchaseDetails purchaseDetails) {
+  void _handleFailedTransaction(String errorMessage, PurchaseDetails purchaseDetails) {
     if (!isClosed) emit(state.copyWith(error: errorMessage));
     if (purchaseDetails.pendingCompletePurchase) {
       if (!isClosed) {
@@ -251,9 +213,7 @@ class UpgradeCubit extends Cubit<UpgradeState> {
   @override
   Future<void> close() {
     _purchaseSubscription?.cancel();
-    if (!_cancelToken.isCancelled) {
-      _cancelToken.cancel();
-    }
+    if (!_cancelToken.isCancelled) _cancelToken.cancel();
     return super.close();
   }
 }

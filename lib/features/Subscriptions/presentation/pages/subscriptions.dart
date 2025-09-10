@@ -1,5 +1,7 @@
 import 'package:archtech/core/extension/dialog_on_context.dart';
+import 'package:archtech/core/extension/locale_on_context.dart';
 import 'package:archtech/core/extension/navigate_on_context.dart';
+import 'package:archtech/core/theme/color_manger.dart';
 import 'package:archtech/core/utils/app_bar.dart';
 import 'package:archtech/core/utils/custom_button.dart';
 import 'package:archtech/core/utils/text_style_manager.dart';
@@ -9,7 +11,8 @@ import 'package:archtech/features/Subscriptions/presentation/bloc/upgrade_state.
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:url_launcher/url_launcher.dart';
+import '../../../html/enum/enum_type.dart';
+import '../../../html/pages/html_screen_viewer.dart';
 import '../widgets/subscription_card.dart';
 
 class Subscriptions extends StatelessWidget {
@@ -17,12 +20,7 @@ class Subscriptions extends StatelessWidget {
 
   const Subscriptions({super.key});
 
-  Future<void> _launchUrl(String url) async {
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    }
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -77,10 +75,10 @@ class Subscriptions extends StatelessWidget {
 
               CustomButton.icon(
                 onPressed: () {
-                  // context.read<UpgradeCubit>().restorePurchases();
+                  context.read<UpgradeCubit>().restorePurchases();
                 },
                 shape: const StadiumBorder(),
-                text: 'CancelSubscriptions',
+                text: 'RestorePurchases',
                 icon: Icons.bookmark_remove_outlined,
                 style: TextStyleManager.bodyLargeWhite
                     .copyWith(color: Colors.white),
@@ -97,55 +95,66 @@ class Subscriptions extends StatelessWidget {
   }
 }
 
+
 class TermsAndPolicyWidget extends StatelessWidget {
   const TermsAndPolicyWidget({super.key});
 
-  Future<void> _launchUrl(String urlString) async {
-    final Uri url = Uri.parse(urlString);
-    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-      throw Exception('Could not launch $url');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      padding: const EdgeInsets.all(10),
-      child: Center(
-          child: Text.rich(TextSpan(
-              text: 'Bysubscribing ',
-              style: const TextStyle(fontSize: 16, color: Colors.black),
-              children: <TextSpan>[
-            TextSpan(
-                text: 'TermsOfUse',
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Text.rich(
+          TextSpan(
+            text: context.translate('Bysubscribing  '),
+            style: const TextStyle(fontSize: 16, color: Colors.black),
+            children: <TextSpan>[
+              TextSpan(
+                text: context.translate('TermsOfUse'),
                 style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
                   decoration: TextDecoration.underline,
+                  color: ColorManger.primary,
                 ),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
-                    _launchUrl(
-                        'https://app.termly.io/dashboard/website/3adc9fc0-47c5-480d-8cc6-a8ce81c7b28e/terms-of-service');
-                  }),
-            TextSpan(
-                text: ' and ',
-                style: const TextStyle(fontSize: 18, color: Colors.black),
-                children: <TextSpan>[
-                  TextSpan(
-                      text: '  Privacypolicy',
-                      style: const TextStyle(
-                          fontSize: 18,
-                          color: Colors.black,
-                          decoration: TextDecoration.underline),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          _launchUrl(
-                              'https://app.termly.io/dashboard/website/3adc9fc0-47c5-480d-8cc6-a8ce81c7b28e/terms-of-service');
-                        })
-                ])
-          ]))),
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) =>
+                        const HtmlViewerScreen(
+                            htmlType: HtmlType.termsAndCondition),
+                      ),
+                    );
+                  },
+              ),
+              TextSpan(text: ' ${context.translate('and')} '),
+              TextSpan(
+                text: context.translate('PrivacyPolicy'),
+                style: const TextStyle(
+                  decoration: TextDecoration.underline,
+                  color: ColorManger.primary,
+                ),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) =>
+                        const HtmlViewerScreen(
+                            htmlType: HtmlType.privacyPolicy),
+                      ),
+                    );
+                  },
+              ),
+              TextSpan(text: '.'),
+            ],
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
     );
   }
 }
+
+

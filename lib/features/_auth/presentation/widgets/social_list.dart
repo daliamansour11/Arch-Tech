@@ -130,18 +130,7 @@ class SocialList extends StatelessWidget {
               }
             },
           ),
-        // if (Platform.isIOS)
-        //   SocialIcon(
-        //     icon: SvgConstantsAssets.assetsSvgApple,
-        //     onTap: () {
-        //       final String? ro = role;
-        //       if (ro != null) {
-        //         context.read<AuthBloc>().add(AuthEvent.registerWithApple(ro));
-        //       } else {
-        //         context.read<AuthBloc>().add(const AuthEvent.loginWithApple());
-        //       }
-        //     },
-        //   ),
+
       ],
     );
   }

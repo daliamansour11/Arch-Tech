@@ -210,7 +210,11 @@
     "Bysubscribing": "En vous abonnant, vous acceptez",
     "TermsOfUse": "Conditions d'utilisation",
     "Privacypolicy": "Politique de confidentialité",
-    "Durationnotspecified": "Durée non spécifiée"
+    "and": "et",
+    "terms_and_conditions": "Termes et conditions",
+    "privacy_policy": "Politique de confidentialité",
+    "Durationnotspecified": "Durée non spécifiée",
+    "RestorePurchases": "Restaurer les achats"
 
 
 }

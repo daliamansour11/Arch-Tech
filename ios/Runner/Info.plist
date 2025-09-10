@@ -2,27 +2,24 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <!-- Permissions Keys -->
     <key>NSCameraUsageDescription</key>
-    <string>Camera access is needed to scan QR codes for event check-ins</string>
-
+    <string>NSCameraUsageDescription</string>
     <key>NSMicrophoneUsageDescription</key>
-    <string>We need access to the microphone for recording audio</string>
-
+    <string>NSMicrophoneUsageDescription</string>
     <key>NSPhotoLibraryUsageDescription</key>
-    <string>We need access to your photo library to upload profile image and other data</string>
-
+    <string>NSPhotoLibraryUsageDescription</string>
     <key>NSLocationWhenInUseUsageDescription</key>
-    <string>We use your location to show nearby heritage sites and guide you on the map (e.g., suggest places within 2 km and draw the route).</string>
-
+    <string>NSLocationWhenInUseUsageDescription</string>
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>We use your location to keep guidance and nearby alerts working even when the app is not open.</string>
-
+    <string>NSLocationAlwaysAndWhenInUseUsageDescription</string>
     <key>NSLocationTemporaryUsageDescriptionDictionary</key>
     <dict>
         <key>NavigationPrecision</key>
-        <string>We temporarily need precise location to calculate an accurate walking route to the selected site.</string>
+        <string>NavigationPrecision</string>
     </dict>
 
+    <!-- iOS App Settings -->
     <key>CADisableMinimumFrameDurationOnPhone</key>
     <true/>
     <key>CFBundleDevelopmentRegion</key>
@@ -53,6 +50,8 @@
     <string>LaunchScreen</string>
     <key>UIMainStoryboardFile</key>
     <string>Main</string>
+
+    <!-- Supported orientations -->
     <key>UISupportedInterfaceOrientations</key>
     <array>
         <string>UIInterfaceOrientationPortrait</string>

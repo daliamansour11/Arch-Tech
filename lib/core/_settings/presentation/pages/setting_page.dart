@@ -5,8 +5,10 @@ import 'package:archtech/core/utils/app_bar.dart';
 import 'package:archtech/core/utils/text_manager.dart';
 import 'package:archtech/features/_auth/presentation/pages/sing_out.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 
+import '../../../../features/Subscriptions/presentation/bloc/upgrade_cubit.dart';
 import '../../../utils/custom_button.dart';
 import '../../../utils/text_style_manager.dart';
 
@@ -29,10 +31,10 @@ class SettingPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: CustomButton.icon(
                 onPressed: () {
-                  // context.read<UpgradeCubit>().restorePurchases();
+                  context.read<UpgradeCubit>().restorePurchases();
                 },
                 shape: const StadiumBorder(),
-                text: 'CancelSubscriptions',
+                text: 'RestorePurchases',
                 icon: Icons.bookmark_remove_outlined,
                 style: TextStyleManager.bodyLargeWhite
                     .copyWith(color: Colors.white),

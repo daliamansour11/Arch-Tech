@@ -1,7 +1,6 @@
-"NSCameraUsageDescription" = "نحتاج للوصول إلى الكاميرا لمسح رموز QR عند تسجيل الدخول للفعاليات.";
-"NSMicrophoneUsageDescription" = "نحتاج للوصول إلى الميكروفون لتسجيل الصوت.";
-"NSPhotoLibraryUsageDescription" = "نحتاج للوصول إلى مكتبة الصور لرفع صورة الملف الشخصي وبيانات أخرى.";
-"NSLocationAlwaysAndWhenInUseUsageDescription" = "نحتاج للوصول إلى موقعك لتوفير خدمات التتبع حتى عند عدم استخدام التطبيق.";
+"NSCameraUsageDescription" = "نحتاج إلى الكاميرا لمسح رموز QR عند تسجيل الدخول للفعاليات.";
+"NSMicrophoneUsageDescription" = "نحتاج إلى الميكروفون لتسجيل الصوت.";
+"NSPhotoLibraryUsageDescription" = "نحتاج إلى مكتبة الصور لرفع صورة الملف الشخصي وبيانات أخرى.";
 "NSLocationWhenInUseUsageDescription" = "نستخدم موقعك لعرض المعالم القريبة وإرشادك على الخريطة (مثل اقتراح أماكن ضمن ٢ كم ورسم مسار الوصول).";
-"NavigationPrecision" = "نحتاج مؤقتًا إلى دقّة عالية لحساب مسار المشي بدقة إلى الموقع المختار.";
-
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "نستخدم موقعك للإرشاد والتنبيهات القريبة حتى عند عدم فتح التطبيق.";
+"NavigationPrecision" = "نحتاج مؤقتًا إلى دقة عالية لحساب مسار المشي بدقة.";

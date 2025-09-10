@@ -1,5 +1,6 @@
 import 'package:archtech/features/Home/presentation/pages/home_research.dart';
 
+import '../../features/html/pages/html_screen_viewer.dart';
 import 'route_imports.dart';
 
 final class RouteNames {
@@ -28,6 +29,7 @@ final class RouteNames {
   static const String archaeologicalInfo = ArchaeologicalInfo.routeName;
   static const String notesScreen = NotesScreen.routeName;
   static const String subscriptions = Subscriptions.routeName;
+  static const String htmlViewerScreen = HtmlViewerScreen.routeName;
 
   static const String comments = Comments.routeName;
   static const String mainScreen = MainScreen.routeName;

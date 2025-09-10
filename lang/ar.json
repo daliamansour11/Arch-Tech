@@ -182,7 +182,7 @@
     "Subscribedescription": "احصل على محتوى حصري، أدوات متقدمة، وتجربة مخصصة.",
     "Subscribebutton": "اشترك الآن",
     "CancelSubscription": "إلغاء الاشتراك",
-    "CancelSubscriptions": "إلغاء الاشتراك",
+    "RestorePurchases": " استعادة المشتريات",
     "SubscriptionUpgradedSuccessfully": "تم ترقية الاشتراك بنجاح",
     "PleaseSelectPlan": "يرجى تحديد الخطة",
     "ImageProcessingSuccess": "تمت المعالجة بنجاح",
@@ -202,9 +202,12 @@
     "Description": "الوصف",
     "NoNotifications": "لا يوجد اشعارات",
     "SignInAsGuest": "تسجيل الدخول كضيف",
-    "Bysubscribing": "بمجرد الاشتراك، أنت توافق على",
+    "Bysubscribing": "بمجرد الاشتراك، أنت توافق على ",
     "TermsOfUse": "شروط الاستخدام",
     "Privacypolicy": "سياسة الخصوصية",
+    "and": "و",
+    "terms_and_conditions": "الشروط والأحكام",
+    "privacy_policy": "سياسة الخصوصية",
     "Durationnotspecified": "مدة الاشتراك غير محددة"
 
 }
